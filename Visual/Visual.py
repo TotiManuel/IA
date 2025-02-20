@@ -1,4 +1,5 @@
 import tkinter as tk
+import os
 from tkinter import messagebox
 from Control.Control import Control
 
@@ -23,6 +24,8 @@ class Visual:
         elif eleccion == "reconocimientovoz":
             self.messageBox.showwarning("Reconocimiento.","Se iniciara el reconocimiento de voz.")
             self.control.iniciarReconVoz()
+        elif eleccion == "reconocimientoIps":
+            print(os.system("ipconfig"))
     
     def nuevo_archivo(self):
         messagebox.showinfo("Nuevo", "Crear un nuevo archivo.")
@@ -84,7 +87,7 @@ class Visual:
         self.botonFacial.pack(pady=1)
         self.botonVoz = tk.Button(self.root, text="Reconocimiento de Voz", command=lambda:self.opcionBoton("reconocimientovoz"))
         self.botonVoz.pack(pady=1)
-        self.botonMail = tk.Button(self.root, text="Enviar Mail")
+        self.botonMail = tk.Button(self.root, text="Reconocer Ips", command=lambda:self.opcionBoton("reconocimientoIps"))
         self.botonMail.pack(pady=1)
         self.botonSalir = tk.Button(self.root, text="Salir", command=lambda:self.root.destroy())
         self.botonSalir.pack(pady=1)
