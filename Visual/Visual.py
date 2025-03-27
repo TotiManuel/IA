@@ -8,46 +8,47 @@ class Visual:
         self.messageBox = messagebox
         self.control = Control()
     
-    def verificarInicio(self, respuesta):
-        if respuesta == True:
-            print("si")
+    def check_start(self, response):
+        if response == True:
+            print("Yes")
         else:
             print("No")
 
-    def opcionBoton(self, eleccion):
-        if eleccion == "camara":
-            self.messageBox.showwarning("Camara.","Se iniciara la camara.")
-            self.control.iniciarCamara()
-        elif eleccion == "reconocimiento":
-            self.messageBox.showwarning("Camara.","Se iniciara la camara y hara un reconocimiento facial.")
-            self.control.iniciarReconocimiento()
-        elif eleccion == "reconocimientovoz":
-            self.messageBox.showwarning("Reconocimiento.","Se iniciara el reconocimiento de voz.")
-            self.control.iniciarReconVoz()
-        elif eleccion == "reconocimientoIps":
-            print(os.system("ipconfig"))
+    def button_option(self, choice):
+        if choice == "camera":
+            self.messageBox.showwarning("Camera.", "The camera will start.")
+            self.control.start_camera()
+        elif choice == "recognition":
+            self.messageBox.showwarning("Camera.", "The camera will start and facial recognition will be performed.")
+            self.control.start_recognition()
+        elif choice == "voice_recognition":
+            self.messageBox.showwarning("Recognition.", "Voice recognition will start.")
+            self.control.start_voice_recognition()
+        elif choice == "ip_recognition":
+            ip = self.control.start_recognize_ip()
+            messagebox.showinfo("IP del Equipo", ip)
     
-    def nuevo_archivo(self):
-        messagebox.showinfo("Nuevo", "Crear un nuevo archivo.")
+    def new_file(self):
+        messagebox.showinfo("New", "Create a new file.")
     
-    def abrir_archivo(self):
-        messagebox.showinfo("Abrir", "Abrir un archivo existente.")
+    def open_file(self):
+        messagebox.showinfo("Open", "Open an existing file.")
     
-    def salir(self):
+    def exit(self):
         self.root.quit()
     
-    def pegar(self):
-        messagebox.showinfo("Pegar", "Pegar contenido.")
+    def paste(self):
+        messagebox.showinfo("Paste", "Paste content.")
     
-    def acerca_de(self):
-        messagebox.showinfo("Acerca de", "Aplicación de ejemplo con menú en Tkinter.")
+    def about(self):
+        messagebox.showinfo("About", "Example application with menu in Tkinter.")
 
-    def inicio(self):
-        #self.messageBox.showwarning("ADVERTENCIA: Acceso no autorizado.","No tienes acceso para utilizar este dispositivo por favor dejalo, usamos reconocimieto facial para identificarte.")
-        #respuesta = self.messageBox.askyesno("Continuar?", "Si continuas tus datos seran usado para lo que creamos convenientes para que devuelvas el dispositivo")
-        #self.verificarInicio(respuesta)
+    def start(self):
+        #self.messageBox.showwarning("WARNING: Unauthorized Access.","You do not have access to use this device. Please leave it, we use facial recognition to identify you.")
+        #response = self.messageBox.askyesno("Continue?", "If you continue, your data will be used for purposes we deem appropriate for you to return the device.")
+        #self.check_start(response)
         
-        #region ConfiguracionVentana
+        #region Window Configuration
         self.root = tk.Tk()
         self.root.title("JMM")
         self.root.geometry("500x500")
@@ -55,41 +56,41 @@ class Visual:
     
         #region menu
 
-        # Crear un menú en la parte superior
+        # Create a menu at the top
         self.menu = tk.Menu(self.root)
         self.root.config(menu=self.menu)
         
-        # Crear el menú "Archivo"
-        archivo_menu = tk.Menu(self.menu, tearoff=0)
-        self.menu.add_cascade(label="Archivo", menu=archivo_menu)
-        archivo_menu.add_command(label="Nuevo", command=self.nuevo_archivo)
-        archivo_menu.add_command(label="Abrir", command=self.abrir_archivo)
-        archivo_menu.add_separator()
-        archivo_menu.add_command(label="Salir", command=self.salir)
+        # Create the "File" menu
+        file_menu = tk.Menu(self.menu, tearoff=0)
+        self.menu.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="New", command=self.new_file)
+        file_menu.add_command(label="Open", command=self.open_file)
+        file_menu.add_separator()
+        file_menu.add_command(label="Exit", command=self.exit)
         
-        # Crear el menú "Edición"
-        editar_menu = tk.Menu(self.menu, tearoff=0)
-        self.menu.add_cascade(label="Funciones", menu=editar_menu)
-        editar_menu.add_command(label="Abrir Camara", command=lambda:self.opcionBoton("camara"))
-        editar_menu.add_command(label="Reconocimiento Facial", command=lambda:self.opcionBoton("reconocimiento"))
-        editar_menu.add_command(label="Reconocimiento De Voz", command=lambda:self.opcionBoton("reconocimientovoz"))
+        # Create the "Functions" menu
+        functions_menu = tk.Menu(self.menu, tearoff=0)
+        self.menu.add_cascade(label="Functions", menu=functions_menu)
+        functions_menu.add_command(label="Open Camera", command=lambda:self.button_option("camera"))
+        functions_menu.add_command(label="Facial Recognition", command=lambda:self.button_option("recognition"))
+        functions_menu.add_command(label="Voice Recognition", command=lambda:self.button_option("voice_recognition"))
         
-        # Crear el menú "Ayuda"
-        ayuda_menu = tk.Menu(self.menu, tearoff=0)
-        self.menu.add_cascade(label="Ayuda", menu=ayuda_menu)
-        ayuda_menu.add_command(label="Acerca de", command=self.acerca_de)
+        # Create the "Help" menu
+        help_menu = tk.Menu(self.menu, tearoff=0)
+        self.menu.add_cascade(label="Help", menu=help_menu)
+        help_menu.add_command(label="About", command=self.about)
 
         #endregion
 
-        self.botonCamara = tk.Button(self.root, text="Iniciar Camara", command=lambda:self.opcionBoton("camara"))
-        self.botonCamara.pack(pady=1)
-        self.botonFacial = tk.Button(self.root, text="Reconocimiento Facial", command=lambda:self.opcionBoton("reconocimiento"))
-        self.botonFacial.pack(pady=1)
-        self.botonVoz = tk.Button(self.root, text="Reconocimiento de Voz", command=lambda:self.opcionBoton("reconocimientovoz"))
-        self.botonVoz.pack(pady=1)
-        self.botonMail = tk.Button(self.root, text="Reconocer Ips", command=lambda:self.opcionBoton("reconocimientoIps"))
-        self.botonMail.pack(pady=1)
-        self.botonSalir = tk.Button(self.root, text="Salir", command=lambda:self.root.destroy())
-        self.botonSalir.pack(pady=1)
+        self.camera_button = tk.Button(self.root, text="Start Camera", command=lambda:self.button_option("camera"))
+        self.camera_button.pack(pady=1)
+        self.facial_button = tk.Button(self.root, text="Facial Recognition", command=lambda:self.button_option("recognition"))
+        self.facial_button.pack(pady=1)
+        self.voice_button = tk.Button(self.root, text="Voice Recognition", command=lambda:self.button_option("voice_recognition"))
+        self.voice_button.pack(pady=1)
+        self.mail_button = tk.Button(self.root, text="Recognize IPs", command=lambda:self.button_option("ip_recognition"))
+        self.mail_button.pack(pady=1)
+        self.exit_button = tk.Button(self.root, text="Exit", command=lambda:self.root.destroy())
+        self.exit_button.pack(pady=1)
         
         self.root.mainloop()

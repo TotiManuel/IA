@@ -1,17 +1,23 @@
-from Model.Camara import ControlCamara
-from Model.ReconocimientoFacial import ReconocimientoDeRostros
-from Model.ReconocimientoVoz import ReconocimientoVoz
+from Model.Camera import CameraControl
+from Model.FaceRecognition import FaceRecognition
+from Model.VoiceRecognition import VoiceRecognition
+from Model.RecognizeIP import RecognizeIP
+
 class Control:
     def __init__(self):
-        self.camara = ControlCamara()
-        self.reconocimiento = ReconocimientoDeRostros()
-        self.reconVoz = ReconocimientoVoz()
+        self.camera = CameraControl()
+        self.recognition = FaceRecognition()
+        self.voiceRecognition = VoiceRecognition()
+        self.recognizeIp = RecognizeIP()
 
-    def iniciarCamara(self):
-        self.camara.iniciar()
+    def start_camera(self):
+        self.camera.start()
     
-    def iniciarReconocimiento(self):
-        self.reconocimiento.iniciar()
+    def start_recognition(self):
+        self.recognition.start()
     
-    def iniciarReconVoz(self):
-        self.reconVoz.iniciarReconocimiento()
+    def start_voice_recognition(self):
+        self.voiceRecognition.start_recognition()
+
+    def start_recognize_ip(self):
+        return self.recognizeIp.get_ip()
